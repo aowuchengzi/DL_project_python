@@ -34,7 +34,7 @@ build
 *.jpg
 *.png
 *.gif
-*.jepg
+*.jpeg
 
 # saved weights
 *.h5
