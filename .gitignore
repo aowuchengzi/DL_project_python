@@ -44,3 +44,4 @@ build
 
 # matlab
 *.tif
+*.mat
