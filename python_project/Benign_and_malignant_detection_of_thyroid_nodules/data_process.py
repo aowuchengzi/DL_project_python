@@ -141,7 +141,7 @@ def getpredict(img_path, model_path, save_folder_path, target_size=(256,256)):
     '''
     img_path:图像目录
     model_path:模型路径
-    save_path:mask保存路径
+    save_folder_path:mask保存路径
     '''
     model = load_model(model_path)
     for path in getAllfiles(img_path):
