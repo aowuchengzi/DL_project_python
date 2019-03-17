@@ -11,6 +11,7 @@ from model8 import *
 from model9 import *
 from model10 import *
 from denseunet import *
+from data_process import *
 #%%
 train_data_dir = r'data/thyroid/train'
 validation_data_dir = r'data/thyroid/validation'
@@ -81,33 +82,52 @@ import pickle
 with open('trainHistoryDict-dice/model1-0-200', 'wb') as file_pi: 
      pickle.dump(history.history, file_pi) 
      #%%
-model_10.save_weights('model10-3-weights-200.h5')
-
-#%%
-import matplotlib.pyplot as plt
-plt.plot(history.history['acc'])
-plt.plot(history.history['val_acc'])
-plt.title('Model accuracy')
-plt.ylabel('Accuracy')
-plt.xlabel('Epoch')
-plt.legend(['Train', 'Test'], loc='upper left')
-plt.show()
-#%%
-# 绘制训练 & 验证的损失值
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
-plt.title('Model loss')
-plt.ylabel('Loss')
-plt.xlabel('Epoch')
-plt.legend(['Train', 'Test'], loc='upper left')
-plt.show()
-#%%
-testGene = testGenerator("data/thyroid/test")
-results = model.predict_generator(testGene,30,verbose=1)
-saveResult("data/thyroid/test",results)
+model_10.save_weights('权重保存\model10-3-weights-200.h5')
+model_10.load_weights('权重保存\model10-1-w-171-0.9905.h5')
+model_10.save('model_10-94.32.h5')
 #%%
 from keras.utils import plot_model
-plot_model(model_7, to_file='model7.png', show_shapes=True)
+plot_model(model, to_file='模型可视化\model_cnn1.png', show_shapes=True)
+
+#%%
+model_10 = model_10()
+model_10.load_weights('权重保存\model10-1-w-171-0.9905.h5')
+
+model = model_10
+image_path = r'总数据\总数据_分类实验用\1024x1024\良性'
+mask_path = r'总数据\总数据_分类实验用\1024x1024\mask\良性'
+roi_save_path = r'总数据\总数据_分类实验用\1024x1024\roi\良性'
+disroi_save_path = r'总数据\总数据_分类实验用\1024x1024\disroi\良性'
+getpredict(image_path, model, save_folder_path=mask_path)
+mask_to_roi(image_path, mask_path, roi_save_path)
+mask_to_disroi(image_path, mask_path, disroi_save_path)
+
+
+
+#%%
+image_path = r'总数据\总数据_分类实验用\1172x1100\良性'
+saved_path = r'总数据\总数据_分类实验用\1024x1024\良性'
+box = (74,0,1098,1024)
+img_batch_cut(image_path, saved_path, box, img_type='.jpg')
+
+#%%
+image_path = r'总数据\总数据_分类实验用\1024x1024\roi\恶性'
+save_path = r'总数据\总数据_分类实验用\1024x1024\roi'
+n_fold_cross_validation(image_path, save_path, 5, img_type='jpg', shuffle=True, seed=1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -135,15 +135,15 @@ def img_batch_cut(img_path, save_path, box, img_type='.png'):
         roi.save(save_path_)   #保存到指定文件夹。
         
 #%%
-def getpredict(img_path, model_path, save_folder_path, target_size=(256,256)):
+def getpredict(img_path, model, save_folder_path, target_size=(256,256)):
     #利用训练好的模型
     #获取一张图片的mask
     '''
     img_path:图像目录
-    model_path:模型路径
+    model:模型对象
     save_folder_path:mask保存路径
     '''
-    model = load_model(model_path)
+    
     for path in getAllfiles(img_path):
         file_name = os.path.split(path)
         img = load_img(path, color_mode='grayscale', target_size=target_size, interpolation='bilinear')
