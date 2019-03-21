@@ -18,10 +18,10 @@ from keras import backend as K
 
 
 
-def dense_block(x, blocks， growth_rate, name):
+def dense_block(x, blocks, name):
     
     for i in range(blocks):
-        x = conv_block(x, growth_rate, name=name + '_block' + str(i + 1))
+        x = conv_block(x, 32, name=name + '_block' + str(i + 1))
     return x
 
 
@@ -54,22 +54,22 @@ def cnn1(pretrained_weights = None,input_size = (256,256,1)):
     x_1 = Activation('relu', name='pool1_relu')(x) #256*256*64
     x = MaxPooling2D(strides=2, name='pool1_pool')(x_1)
     #以上为 第一层 卷积层 尺寸：256>>128 通道：1>>64
-    x = dense_block(x, 2, 32, name='conv2') 
+    x = dense_block(x, 2, name='conv2') 
     x = BatchNormalization(axis=bn_axis, epsilon=1.001e-5, name='pool2_bn')(x)
     x_2 = Activation('relu', name='pool2_relu')(x) #128*128*128
     x = MaxPooling2D(strides=2, name='pool2_pool')(x_2)
     #以上为 第二层 卷积层 尺寸：128>>64 通道：64>>128
-    x = dense_block(x, 2, 64, name='conv3') 
+    x = dense_block(x, 4, name='conv3') 
     x = BatchNormalization(axis=bn_axis, epsilon=1.001e-5, name='pool3_bn')(x)
     x_3 = Activation('relu', name='pool3_relu')(x) #64*64*256
     x = MaxPooling2D(strides=2, name='pool3_pool')(x_3)
     #以上为 第三层 卷积层 尺寸：64>>32 通道：128>>256
-    x = dense_block(x, 2, 128, name='conv4') 
+    x = dense_block(x, 8, name='conv4') 
     x = BatchNormalization(axis=bn_axis, epsilon=1.001e-5, name='pool4_bn')(x)
     x_4 = Activation('relu', name='pool4_relu')(x) #32*32*512
     x = MaxPooling2D(strides=2, name='pool4_pool')(x_4)
     #以上为 第四层 卷积层 尺寸：32>>16 通道：256>>512
-    x = dense_block(x, 2, 256, name='conv5') 
+    x = dense_block(x, 16, name='conv5') 
     x = BatchNormalization(axis=bn_axis, epsilon=1.001e-5, name='pool5_bn')(x)
     x = Activation('relu', name='pool5_relu')(x) #16*16*1024
     
