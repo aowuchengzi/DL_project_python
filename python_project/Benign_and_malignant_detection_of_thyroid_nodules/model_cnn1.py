@@ -18,7 +18,7 @@ from keras import backend as K
 
 
 
-def dense_block(x, blocks， growth_rate, name):
+def dense_block(x, blocks, growth_rate, name):
     
     for i in range(blocks):
         x = conv_block(x, growth_rate, name=name + '_block' + str(i + 1))
