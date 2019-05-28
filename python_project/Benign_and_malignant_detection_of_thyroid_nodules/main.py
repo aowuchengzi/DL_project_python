@@ -111,8 +111,8 @@ box = (74,0,1098,1024)
 img_batch_cut(image_path, saved_path, box, img_type='.jpg')
 
 #%%
-image_path = r'总数据\总数据_分类实验用\1024x1024\roi\恶性'
-save_path = r'总数据\总数据_分类实验用\1024x1024\roi'
+image_path = r'总数据\总数据_分类实验用\1024x1024\disroi\良性'
+save_path = r'总数据\总数据_分类实验用\1024x1024\disroi'
 n_fold_cross_validation(image_path, save_path, 5, img_type='jpg', shuffle=True, seed=1)
 
 

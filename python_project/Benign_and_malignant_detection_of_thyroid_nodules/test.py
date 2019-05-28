@@ -46,7 +46,7 @@ from model4 import *
 model_4 = model_4()
 #%%
 from keras.utils import plot_model
-plot_model(model, to_file='model10.png', show_shapes=True)
+plot_model(model, to_file='model.png', show_shapes=True)
 #%%
 from data_process import *
 from keras.models import Model, load_model
@@ -70,6 +70,10 @@ with open('trainHistoryDict', 'wb') as file_pi:
      
      
 #%%
-with open('trainHistoryDict-dice/cnn1-orig&roi-0-200', 'rb') as fp:
-    d = pickle.load(fp)
-    
+import pickle
+with open('trainHistoryDict-cnn/cnn1-orig&roi-0-200', 'rb') as fp:
+    a = pickle.load(fp)
+#    
+#with open('trainHistoryDict-cnn/cnn1-orig&disroi-200-300', 'rb') as fp:
+#    b = pickle.load(fp)
+#        

@@ -9,14 +9,15 @@ from keras.preprocessing.image import ImageDataGenerator
 from data_process import *
 from data import *
 from model_cnn1 import *
+from model_cnn2 import *
 #%%
 #图像尺寸设定
 img_width, img_height = 256, 256
-train_data_dir = r'data\thyroid_B&M_roi\train'
-validation_data_dir = r'data\thyroid_B&M_roi\validation'
+train_data_dir = r'data\thyroid_B&M\train'
+validation_data_dir = r'data\thyroid_B&M\validation'
 nb_train_samples = 1610
 nb_validation_samples = 402
-epochs = 50
+epochs = 100
 batch_size = 16
 #%%
 if K.image_data_format() == 'channels_first':
@@ -54,7 +55,7 @@ validation_generator = test_datagen.flow_from_directory(
         shuffle=False,
         )
 
-auto_save = ModelCheckpoint(filepath="cnn1-roi-w-{epoch:02d}-{acc:.4f}-{val_acc:.4f}.h5",
+auto_save = ModelCheckpoint(filepath="cnn1-w-{epoch:02d}-{acc:.4f}-{val_acc:.4f}.h5",
                             verbose=1,
                             monitor="val_acc",
                             save_best_only=True,
@@ -72,16 +73,16 @@ history = model.fit_generator(
                             validation_steps=nb_validation_samples // batch_size+1,
                             callbacks=[auto_save]
                             )
+
+#%%
+K.set_value(model.optimizer.lr, 0.0001)
 #%%
 model.save_weights('权重保存\cnn1-roi_w_Epoch=100.h5')
 model.save('model1-1_full_ac=90.97-90.97.h5')
 #%%
 import pickle
-with open('trainHistoryDict-dice/cnn1-roi-0-200', 'wb') as file_pi: 
+with open('trainHistoryDict-cnn/cnn1-200-300', 'wb') as file_pi: 
      pickle.dump(history.history, file_pi) 
-#%%
-K.set_value(model.optimizer.lr, 0.0001)
-
 
 
 
